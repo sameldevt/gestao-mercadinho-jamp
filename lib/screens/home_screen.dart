@@ -15,6 +15,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     ListScreen(
       title: "Vendas",
+      addButton: (){
+        MaterialPageRoute(
+        ),
+      },
       cards: [
         Sale(
           date: DateTime.now(),
@@ -277,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
       noItemScreen: const Center(child: Text('Nenhum item disponível')),
     ),
     ListScreen(
-      title: "Devedores",
+      title: "Produtos",
       cards: [
         Sale(
           date: DateTime.now(),
@@ -324,13 +328,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: _screens[_currentPageIndex],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

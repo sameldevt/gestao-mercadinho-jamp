@@ -5,12 +5,14 @@ class ListScreen extends StatefulWidget {
   final String title;
   final List<Widget> cards;
   final Widget noItemScreen;
+  final VoidCallback addButton;
 
   const ListScreen({
     Key? key,
     required this.title,
     required this.cards,
     required this.noItemScreen,
+    required this.addButton,
   }) : super(key: key);
 
   @override
@@ -24,34 +26,41 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-              child: Text(
-                widget.title,
-                textAlign: TextAlign.left,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: widget.addButton,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+                child: Text(
+                  widget.title,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
               ),
-            ),
-          ],
-        ),
-        Expanded(
-          child: RefreshIndicator(
-            onRefresh: _refreshList,
-            child: widget.cards.isEmpty
-                ? widget.noItemScreen
-                : ListView.builder(
-                    itemCount: widget.cards.length,
-                    itemBuilder: (context, index) {
-                      return widget.cards[index];
-                    },
-                  ),
+            ],
           ),
-        ),
-      ],
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _refreshList,
+              child: widget.cards.isEmpty
+                  ? widget.noItemScreen
+                  : ListView.builder(
+                      itemCount: widget.cards.length,
+                      itemBuilder: (context, index) {
+                        return widget.cards[index];
+                      },
+                    ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
