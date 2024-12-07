@@ -1,0 +1,1 @@
+ C:\\dev\\workspace\\androidstudio\\flutter\\mercadinho_jamp\\.dart_tool\\flutter_build\\6277c63b2e24aeddfb1489e03c3716cc\\native_assets.yaml: 
