@@ -5,14 +5,12 @@ class ListScreen extends StatefulWidget {
   final String title;
   final List<Widget> cards;
   final Widget noItemScreen;
-  final VoidCallback addButton;
 
   const ListScreen({
     Key? key,
     required this.title,
     required this.cards,
     required this.noItemScreen,
-    required this.addButton,
   }) : super(key: key);
 
   @override
@@ -26,13 +24,7 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: widget.addButton,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-      body: Column(
+    return Column(
         children: [
           Row(
             children: [
@@ -60,7 +52,6 @@ class _ListScreenState extends State<ListScreen> {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

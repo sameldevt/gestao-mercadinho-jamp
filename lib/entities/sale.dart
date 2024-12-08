@@ -12,95 +12,111 @@ class Sale {
 
 class SaleCard extends StatefulWidget {
   final Sale sale;
+  final VoidCallback onDelete;
+  final VoidCallback onEdit;
 
-  const SaleCard({super.key, required this.sale});
+  const SaleCard(
+      {super.key,
+      required this.sale,
+      required this.onDelete,
+      required this.onEdit});
 
   @override
   State<SaleCard> createState() => _SaleCardState();
 }
 
 class _SaleCardState extends State<SaleCard> {
-  void onDelete() {
-    setState(() {});
-  }
-
-  void onEdit() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('HH:mm');
-    final productNames = widget.sale.products.map((p) => p.name).join(", ");
+    final productNames = widget.sale.products.map((p) => p.name).join("\n");
 
     return Card(
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${dateFormat.format(widget.sale.date)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black87,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: double.maxFinite,
+            height: 38, // Altura da faixa
+            decoration: const BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(12), // Borda arredondada apenas no topo
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${dateFormat.format(widget.sale.date)}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
+                  Text(
+                    "R\$ ${widget.sale.value.toStringAsFixed(2)}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Container(
                   width: 300,
                   child: Text(
-                    "Produtos: $productNames",
+                    "$productNames",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54,
+                      color: Colors.black,
+                      fontSize: 18,
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  "R\$ ${widget.sale.value.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.green,
-                  ),
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: widget.onEdit,
+                      icon: const Icon(
+                        Icons.edit,
+                        size: 30,
+                      ),
+                      color: Colors.black,
+                    ),
+                    IconButton(
+                      onPressed: widget.onDelete,
+                      icon: const Icon(
+                        Icons.delete,
+                        size: 30,
+                      ),
+                      color: Colors.red,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
               ],
             ),
-            Column(
-              children: [
-                IconButton(
-                  onPressed: onEdit,
-                  icon: const Icon(
-                    Icons.edit,
-                    size: 30,
-                  ),
-                  color: Colors.blue,
-                ),
-                IconButton(
-                  onPressed: onDelete,
-                  icon: const Icon(
-                    Icons.delete,
-                    size: 30,
-                  ),
-                  color: Colors.red,
-                ),
-              ],
-            )
-          ],
-        ),
+
+          ),
+
+        ],
       ),
     );
   }
